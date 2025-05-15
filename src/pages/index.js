@@ -2,47 +2,52 @@ import { Sun } from "@/components/Sun";
 import { Search } from "@/components/Search";
 import { Moon } from "@/components/Moon";
 import { Toirog } from "@/components/Toirog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const [weather, setWeather] = useState({});
-  const url = ``;
-  const cityUrl = `https://api.api-ninjas.com/v1/city?name=Tokyo`;
+  const [cities, setCities] = useState("ulaanbaatar");
+  // const cityUrl = `https://api.api-ninjas.com/v1/city?name=${cities}`;
 
-  const getCity = async () => {
-    try {
-      const response = await fetch(cityUrl, {
-        headers: {
-          "X-Api-Key": process.env.NEXT_PUBLIC_CITY_API_KEY,
-        },
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getCity = async () => {
+  //   try {
+  //     const response = await fetch(cityUrl, {
+  //       headers: {
+  //         "X-Api-Key": process.env.NEXT_PUBLIC_CITY_API_KEY,
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     return data;
+  //   } catch (error) {
+  //   }
+  // };
 
   const getWeather = async () => {
     try {
-      const cityLocation = await getCity();
+      // const cityLocation = await getCity();
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${cityLocation[0].latitude}&lon=${cityLocation[0].longitude}&units=metric&appid=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`
+        `https://api.weatherapi.com/v1/forecast.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${cities}`
       );
       const data = await response.json();
-      console.log(data);
       setWeather(data);
     } catch (error) {
-      console.log(error);
     }
   };
-  
   console.log("wwww", weather);
+
+// buttongiin oroltsooguigeer duuddag
+  useEffect(() => {
+    getWeather();
+  }, []);
+
+  
   return (
     <div className="flex w-[100wv] h-[100vh]">
       <div className=" bg-[#f3f4f6] w-[50%] flex justify-center items-center">
         <div className="relative w-[800px] h-[1200px]   flex flex-row justify-center items-center">
-          <Search get={getWeather} />
+          <Search 
+          search={getWeather} 
+          input= {setCities}/>
           <img
             src="./sun.png"
             className="w-[174px] h-[174px] absolute top-[120px] left-30 z-0"
@@ -59,7 +64,8 @@ export default function Home() {
             src="./moon.png"
             className="w-[174px] h-[174px] absolute top-[870px] left-125"
           />
-          <Moon />
+          <Moon 
+          weather={weather}/>
         </div>
       </div>
     </div>
