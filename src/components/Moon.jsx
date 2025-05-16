@@ -16,8 +16,8 @@ export  const Moon = ({weather}) => {
             <div className="px-12">
                 <div className="text-transparent bg-clip-text font-extrabold text-[110px] -mt-10 bg-gradient-to-b from-white to-black">{weather?.forecast?.forecastday[0]?.hour?.[23].temp_c}°</div>
                 <div className="mb-12 flex items-center gap-[10px]">
-                    <h3 className="text-indigo-500 font-extrabold h-6">{weather?.current?.condition?.text}</h3>
-                    <img src={weather?.current?.condition?.icon} alt="zurag" />
+                    <h3 className="text-indigo-500 font-extrabold h-6">{weather?.forecast?.forecastday[0]?.hour[23]?.condition.text}</h3>
+                    <img src={weather?.forecast?.forecastday[0]?.hour[23]?.condition.icon} alt="zurag" />
                 </div>
                     <div className="flex items-center justify-between">
                     <HomeIcon className="w-[32px] h-[32px] text-white"/>

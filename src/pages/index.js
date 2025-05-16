@@ -24,22 +24,47 @@ export default function Home() {
 
   const getWeather = async () => {
     try {
-      // const cityLocation = await getCity();
+      const cityLocation = await getCity();
       const response = await fetch(
         `https://api.weatherapi.com/v1/forecast.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${cities}`
       );
       const data = await response.json();
       setWeather(data);
     } catch (error) {
+      throw new Error(error);
     }
   };
   console.log("wwww", weather);
 
+  const getCities = async () => {
+    try {
+      const response = await fetch(
+        "https://countriesnow.space/api/v0.1/countries"
+      );
+      const data = await response.json();
+
+      const result = data?.data?.filter((city) => {
+        const findCities = city.cities.find(
+          (findCities) => findCities === searchValue 
+        );
+        return findCities;
+      });
+      const city = result[0].cities.find((city) => city === searchValue);
+      setSearchValue(city);
+    } catch (error) {
+      setError("no location found");
+    }
+  };
+
 // buttongiin oroltsooguigeer duuddag
   useEffect(() => {
+    getCities();
     getWeather();
   }, []);
 
+const handleChange = (event) => {
+  setSearchValue(event.target.value)
+}
   
   return (
     <div className="flex w-[100wv] h-[100vh]">
