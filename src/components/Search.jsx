@@ -1,4 +1,4 @@
-import { SearchIcon } from "lucide-react"
+import { SearchIcon, MapPin } from "lucide-react"
 
 export const Search = ({searchValue, handleChange, filteredCity, setSearchValue, getWeather}) => {
     const changeWeather = (value) => {
@@ -17,10 +17,13 @@ export const Search = ({searchValue, handleChange, filteredCity, setSearchValue,
                 value={searchValue}
                 />
             </div>
-            <div>
+            <div className="bg-amber-50">
                 {filteredCity.map((city, index) => (
-                    <div key={index} onClick={() => changeWeather(city)}>
-                     {city}
+                    <div className="flex items-center justify-center">
+                        <MapPin className="w-5 h-5 text-gray-300"/>
+                        <div key={index} className="text-gray-800 w-[567px] h-[56px] p-[24px]" onClick={() => changeWeather(city)}>
+                           {city}
+                        </div>
                     </div>
                 ))}
             </div>

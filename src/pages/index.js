@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [weather, setWeather] = useState({});
-  const [searchValue, setSearchValue] = useState("Tokyi");
+  const [searchValue, setSearchValue] = useState("Ulaanbaatar");
   const [cities, setCities] = useState([]);
   const [filteredCity, setfilteredCity] = useState([])
   const [error, setError] = useState("");
@@ -72,7 +72,7 @@ const handleChange = (event) => {
 );
 const city = citiesAndCountry
 ?.filter((item)=>
-item.toLowerCase().startWith(searchValue.toLowerCase())
+item.toLowerCase().startsWith(searchValue.toLowerCase())
 )
 .slice(0, 4);
 setfilteredCity(city);
